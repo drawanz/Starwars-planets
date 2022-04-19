@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import ContextProvider from '../Context/ContextProvider';
 
