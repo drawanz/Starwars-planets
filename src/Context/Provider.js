@@ -9,6 +9,9 @@ export default function Provider({ children }) {
     async function getPlanets() {
       const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const { results } = await request.json();
+      results.forEach((element) => {
+        delete element.residents;
+      });
       setData(results);
     }
     getPlanets();
