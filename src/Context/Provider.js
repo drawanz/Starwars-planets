@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ContextProvider from './ContextProvider';
 
 export default function Provider({ children }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
     async function getPlanets() {
@@ -17,7 +18,13 @@ export default function Provider({ children }) {
     getPlanets();
   }, []);
 
-  const context = { data };
+  const context = {
+    data,
+    filterByName: {
+      name,
+      setName,
+    },
+  };
 
   return (
     <ContextProvider.Provider value={ context }>

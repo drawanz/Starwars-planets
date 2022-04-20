@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Provider from './Context/Provider';
 import Table from './Components/Table';
+import FormFilter from './Components/FormFilters';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
     <Provider>
       <span>Hello, App!</span>
       <Table />
+      <FormFilter />
     </Provider>
   );
 }

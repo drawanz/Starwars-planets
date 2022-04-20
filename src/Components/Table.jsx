@@ -4,7 +4,8 @@ import ContextProvider from '../Context/ContextProvider';
 
 export default function Table() {
   // const { expenses, deleteExpense, handleEditExpense } = this.props;
-  const { data } = useContext(ContextProvider);
+  const { data, filterByName } = useContext(ContextProvider);
+  const { name } = filterByName;
 
   return (
     <div>
@@ -25,7 +26,7 @@ export default function Table() {
           <th>URL</th>
         </tr>
         {data && console.log('aa')}
-        {data && data.map(
+        {data && data.filter((ele) => ele.name.toLowerCase().includes(name)).map(
           (ele) => (
             <tr key={ ele.url }>
               <td>{ele.name}</td>
