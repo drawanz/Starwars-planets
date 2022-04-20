@@ -5,6 +5,9 @@ import ContextProvider from './ContextProvider';
 export default function Provider({ children }) {
   const [data, setData] = useState('');
   const [name, setName] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     async function getPlanets() {
@@ -24,6 +27,15 @@ export default function Provider({ children }) {
       name,
       setName,
     },
+    filterByNumericValues:
+      {
+        column,
+        setColumn,
+        comparison,
+        setComparison,
+        value,
+        setValue,
+      },
   };
 
   return (
