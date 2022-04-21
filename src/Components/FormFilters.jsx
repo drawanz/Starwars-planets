@@ -2,14 +2,34 @@ import React, { useContext } from 'react';
 import ContextProvider from '../Context/ContextProvider';
 
 export default function FormFilter() {
-  const { filterByName, filterByNumericValues } = useContext(ContextProvider);
+  const { data, setData, filterByName,
+    filterByNumericValues } = useContext(ContextProvider);
+
   const { name, setName } = filterByName;
-  const { column,
-    setColumn,
-    comparison,
-    setComparison,
-    value,
+
+  const { column, setColumn, comparison, setComparison, value,
     setValue } = filterByNumericValues;
+
+  const handleClick = () => {
+    // if (comparison === 'maior que' && data !== '') {
+    //   setData(data.filter((ele) => ele[column] > value));
+    // }
+    // if (comparison === 'menor que' && data !== '') {
+    //   setData(data.filter((ele) => ele[column] < value));
+    // }
+    // if (comparison === 'maior que' && data !== '') {
+    //   setData(data.filter((ele) => ele[column] === value));
+    // }
+    // return data;
+    // console.log(comparison);
+    const operador = {
+      'maior que': data.filter((ele) => Number(ele[column]) > Number(value)),
+      'menor que': data.filter((ele) => Number(ele[column]) < Number(value)),
+      'igual a': data.filter((ele) => Number(ele[column]) === Number(value)),
+    };
+    const newData = operador[comparison];
+    setData(newData);
+  };
 
   return (
     <div>
@@ -65,11 +85,18 @@ export default function FormFilter() {
             data-testid="value-filter"
             name={ value }
             value={ value }
+            type="number"
             onChange={ ({ target }) => setValue(target.value) }
           />
         </label>
 
-        <button type="submit" data-testid="button-filter">Filtrar</button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => handleClick() }
+        >
+          Filtrar
+        </button>
       </form>
     </div>
   );
