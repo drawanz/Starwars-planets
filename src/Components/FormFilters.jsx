@@ -16,15 +16,11 @@ export default function FormFilter() {
       'menor que': data.filter((ele) => Number(ele[column]) < Number(value)),
       'igual a': data.filter((ele) => Number(ele[column]) === Number(value)),
     };
-
     const newData = operador[comparison];
     setData(newData);
-
-    console.log(options);
-    console.log(column);
     const newOptions = options.filter((ele) => ele !== column);
-    console.log(newOptions);
     setOptions(newOptions);
+    if (setColumn) setColumn(newOptions[0]);
   };
 
   return (
@@ -48,8 +44,8 @@ export default function FormFilter() {
           <select
             id="column-filter"
             data-testid="column-filter"
-            // name={ column }
-            // value={ column }
+            name={ column }
+            value={ column }
             onChange={ ({ target }) => setColumn(target.value) }
           >
             {options.map((ele) => <option key={ ele }>{ ele }</option>)}
