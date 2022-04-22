@@ -9,6 +9,10 @@ export default function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState(false);
+  // const [usedFilters, setUsedFilters] = useState([]);
+  const [options, setOptions] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   useEffect(() => {
     async function getPlanets() {
@@ -25,6 +29,8 @@ export default function Provider({ children }) {
   const context = {
     data,
     setData,
+    options,
+    setOptions,
     filterByName: {
       name,
       setName,

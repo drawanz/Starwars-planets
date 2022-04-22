@@ -3,7 +3,7 @@ import ContextProvider from '../Context/ContextProvider';
 
 export default function FormFilter() {
   const { data, setData, filterByName,
-    filterByNumericValues } = useContext(ContextProvider);
+    filterByNumericValues, options, setOptions } = useContext(ContextProvider);
 
   const { name, setName } = filterByName;
 
@@ -11,24 +11,20 @@ export default function FormFilter() {
     setValue } = filterByNumericValues;
 
   const handleClick = () => {
-    // if (comparison === 'maior que' && data !== '') {
-    //   setData(data.filter((ele) => ele[column] > value));
-    // }
-    // if (comparison === 'menor que' && data !== '') {
-    //   setData(data.filter((ele) => ele[column] < value));
-    // }
-    // if (comparison === 'maior que' && data !== '') {
-    //   setData(data.filter((ele) => ele[column] === value));
-    // }
-    // return data;
-    // console.log(comparison);
     const operador = {
       'maior que': data.filter((ele) => Number(ele[column]) > Number(value)),
       'menor que': data.filter((ele) => Number(ele[column]) < Number(value)),
       'igual a': data.filter((ele) => Number(ele[column]) === Number(value)),
     };
+
     const newData = operador[comparison];
     setData(newData);
+
+    console.log(options);
+    console.log(column);
+    const newOptions = options.filter((ele) => ele !== column);
+    console.log(newOptions);
+    setOptions(newOptions);
   };
 
   return (
@@ -52,15 +48,11 @@ export default function FormFilter() {
           <select
             id="column-filter"
             data-testid="column-filter"
-            name={ column }
-            value={ column }
+            // name={ column }
+            // value={ column }
             onChange={ ({ target }) => setColumn(target.value) }
           >
-            <option>population</option>
-            <option>orbital_period</option>
-            <option>diameter</option>
-            <option>rotation_period</option>
-            <option>surface_water</option>
+            {options.map((ele) => <option key={ ele }>{ ele }</option>)}
           </select>
         </label>
 
