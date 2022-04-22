@@ -4,12 +4,13 @@ import ContextProvider from './ContextProvider';
 
 export default function Provider({ children }) {
   const [data, setData] = useState('');
+  const [dataFiltered, setDataFiltered] = useState('');
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState(false);
-  // const [usedFilters, setUsedFilters] = useState([]);
+  const [usedFilters, setUsedFilters] = useState([]);
   const [options, setOptions] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
@@ -29,8 +30,12 @@ export default function Provider({ children }) {
   const context = {
     data,
     setData,
+    dataFiltered,
+    setDataFiltered,
     options,
     setOptions,
+    usedFilters,
+    setUsedFilters,
     filterByName: {
       name,
       setName,

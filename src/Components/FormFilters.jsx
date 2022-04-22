@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ContextProvider from '../Context/ContextProvider';
 
 export default function FormFilter() {
-  const { data, setData, filterByName,
+  const { data, setData, usedFilters, setUsedFilters, filterByName,
     filterByNumericValues, options, setOptions } = useContext(ContextProvider);
 
   const { name, setName } = filterByName;
@@ -18,9 +18,27 @@ export default function FormFilter() {
     };
     const newData = operador[comparison];
     setData(newData);
+  };
+
+  const handleOptions = () => {
     const newOptions = options.filter((ele) => ele !== column);
     setOptions(newOptions);
     if (setColumn) setColumn(newOptions[0]);
+  };
+
+  const handleUsedFilters = () => {
+    const obj = { column, comparison, value };
+    const newFilters = [...usedFilters, obj];
+    setUsedFilters(newFilters);
+  };
+
+  const handleButtonX = (indexParam) => {
+    const itemToRemove = usedFilters[indexParam].column;
+    const newFilters = [...usedFilters];
+    newFilters.splice(indexParam, 1);
+    setUsedFilters(newFilters);
+    const newOptions = [...options, itemToRemove];
+    setOptions(newOptions);
   };
 
   return (
@@ -81,9 +99,35 @@ export default function FormFilter() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleClick() }
+          onClick={ () => {
+            handleClick();
+            handleUsedFilters();
+            handleOptions();
+          } }
         >
           Filtrar
+        </button>
+        {usedFilters && usedFilters.map((e, index) => (
+          <div key={ index } data-testid="filter">
+            <span>{`${e.column} ${e.comparison} ${e.value}`}</span>
+            <button
+              type="button"
+              onClick={ () => handleButtonX(index) }
+            >
+              X
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ () => {
+            setOptions(['population', 'orbital_period', 'diameter',
+              'rotation_period', 'surface_water']);
+            setUsedFilters([]);
+          } }
+        >
+          Remover todas filtragens
         </button>
       </form>
     </div>
