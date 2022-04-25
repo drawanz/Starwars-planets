@@ -3,9 +3,22 @@ import PropTypes from 'prop-types';
 import ContextProvider from '../Context/ContextProvider';
 
 export default function Table() {
-  const { data, filterByName } = useContext(ContextProvider);
+  const { data, filterByName, usedFilters } = useContext(ContextProvider);
   const { name } = filterByName;
-  // const { column, comparison, value } = filterByNumericValues;
+
+  const applyFilters = () => {
+    let dataFiltered = [...data];
+
+    usedFilters.forEach((e) => {
+      const operador = {
+        'maior que': dataFiltered.filter((el) => Number(el[e.column]) > Number(e.value)),
+        'menor que': dataFiltered.filter((el) => Number(el[e.column]) < Number(e.value)),
+        'igual a': dataFiltered.filter((el) => Number(el[e.column]) === Number(e.value)),
+      };
+      dataFiltered = operador[e.comparison];
+    });
+    return dataFiltered;
+  };
 
   return (
     <div>
@@ -25,7 +38,7 @@ export default function Table() {
           <th>Edited</th>
           <th>URL</th>
         </tr>
-        {data && data.filter((ele) => ele.name.toLowerCase().includes(name)).map(
+        { applyFilters().filter((ele) => ele.name.toLowerCase().includes(name)).map(
           (ele) => (
             <tr key={ ele.url }>
               <td>{ele.name}</td>

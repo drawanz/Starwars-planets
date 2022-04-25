@@ -23,6 +23,7 @@ export default function Provider({ children }) {
         delete element.residents;
       });
       setData(results);
+      setDataFiltered(results);
     }
     getPlanets();
   }, []);
